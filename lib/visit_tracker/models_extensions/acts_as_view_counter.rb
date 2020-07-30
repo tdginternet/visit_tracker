@@ -22,17 +22,17 @@ module VisitTracker
           belongs_to :item, :polymorphic => true
           has_many   :view_history
 
-          scope :include_item, includes(:item)
+          scope :include_item, -> { includes(:item) }
           scope :by_source, lambda {|source| where(:source => source)}
           scope :by_item,   lambda {|item| where(:item_type => item.class.to_s, :item_id => item.id)}
           scope :by_item_type, lambda {|item_type| where(:item_type => item_type) }
-          scope :order_today_views      , order('today DESC')
-          scope :order_yesterday_views  , order('yesterday DESC')
-          scope :order_this_week_views  , order('this_week DESC')
-          scope :order_last_week_views  , order('last_week DESC')
-          scope :order_this_month_views , order('this_month DESC')
-          scope :order_last_month_views , order('last_month DESC')
-          scope :order_total_views      , order('total DESC')
+          scope :order_today_views, -> { order('today DESC') }
+          scope :order_yesterday_views, -> { order('yesterday DESC') }
+          scope :order_this_week_views, -> { order('this_week DESC') }
+          scope :order_last_week_views, -> { order('last_week DESC') }
+          scope :order_this_month_views, -> { order('this_month DESC') }
+          scope :order_last_month_views, -> { order('last_month DESC') }
+          scope :order_total_views, -> { order('total DESC') }
         end
 
         module ClassMethods

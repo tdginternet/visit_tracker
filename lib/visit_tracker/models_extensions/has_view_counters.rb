@@ -30,15 +30,15 @@ module VisitTracker
 
         has_many :view_counters, :as => :item, :dependent => :destroy
         
-        scope :view_counter_by_source , lambda { |source|  joins(:view_counters).where('view_counters.source = ?', source) }
-        scope :order_view_counter     , lambda { |listing| joins(:view_counters).order("#{listing.to_s} DESC") }
-        scope :order_today_views      , order_view_counter(:today)
-        scope :order_yesterday_views  , order_view_counter(:yesterday)
-        scope :order_this_week_views  , order_view_counter(:this_week)
-        scope :order_last_week_views  , order_view_counter(:last_week)
-        scope :order_this_month_views , order_view_counter(:this_month)
-        scope :order_last_month_views , order_view_counter(:last_month)
-        scope :order_total_views      , order_view_counter(:total)
+        scope :view_counter_by_source, lambda { |source|  joins(:view_counters).where('view_counters.source = ?', source) }
+        scope :order_view_counter, lambda { |listing| joins(:view_counters).order("#{listing.to_s} DESC") }
+        scope :order_today_views, -> { order_view_counter(:today) }
+        scope :order_yesterday_views, -> { order_view_counter(:yesterday) }
+        scope :order_this_week_views, -> { order_view_counter(:this_week) }
+        scope :order_last_week_views, -> { order_view_counter(:last_week) }
+        scope :order_this_month_views, -> { order_view_counter(:this_month) }
+        scope :order_last_month_views, -> { order_view_counter(:last_month) }
+        scope :order_total_views, -> { order_view_counter(:total) }
 
         after_create :create_view_counter
       end
